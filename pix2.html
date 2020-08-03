@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>quiz in Javascript </title>
+ <link rel="stylesheet" href="style.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+body{
+ margin:0;
+ background-color:#d9cdcd;
+ font-family: sans-serif;
+}
+*{
+ box-sizing: border-box;
+}
+
+.quiz-container{
+ max-width: 700px;
+ min-height:500px;
+ background-color: #ffffff;
+ margin:40px auto;
+
+ border-radius:10px;
+ padding:30px;
+}
+.quiz-container::after,.quiz-container::before{
+ content: '';
+ clear: both;
+ display: table;
+
+}
+.question-number,
+.question,
+.options,
+.button,
+.answers-tracker{
+ float: left;
+ width: 100%;
+}
+.question-number h3{
+ color:#009688;
+ border-bottom: 1px solid #ccc;
+ margin:0;
+ padding-bottom:10px;
+}
+
+.question {
+ font-size:22px;
+ color:000000;
+ padding:20px 0;
+
+}
+
+.options div{
+  background-color: #cccccc;
+  font-size:16px;
+  color:000000;
+  margin-bottom:10px;
+  border-radius:5px;
+  padding:15px;
+  position: relative;
+  overflow:hidden;
+  cursor: pointer;
+}
+.options div.disabled{
+ pointer-events: none;
+}
+.options div.correct{
+ z-index: 1;
+ color: #fff;
+}
+.options div.correct::before{
+ content: '';
+ position: absolute;
+ left:0;
+ top:0;
+ width: 100%;
+ height: 100%;
+ background-color: green;
+ z-index: -1;
+
+ animation: animateBackground 1s ease;
+ animation-fill-mode: forwards;
+}
+@keyframes animateBackground{
+ 0%{
+  transform: translateX(-100%);
+ }
+ 100%{
+  transform: translateX(0%);
+ }
+}
+.options div.wrong{
+ z-index: 1;
+ color: #fff;
+}
+.options div.wrong::before{
+ content: '';
+ position: absolute;
+ left:0;
+ top:0;
+ width: 100%;
+ height: 100%;
+ background-color:red;
+ z-index: -1;
+
+ animation: animateBackground 1s ease;
+ animation-fill-mode: forwards;
+}
+@keyframes animateBackground{
+ 0%{
+  transform: translateX(-100%);
+ }
+ 100%{
+  transform: translateX(0%);
+ }
+}
+
+.button .btn{
+ padding:15px 50px;
+ border-radius:5px;
+ cursor: pointer;
+ background-color:#009688;
+ font-size:16px;
+ color:#ffffff;
+ border: none;
+ display: inline-block;
+ margin:15px 0 20px;
+}
+.answers-tracker{
+ border-top:1px solid #ccc;
+ padding-top: 15px;
+}
+.answers-tracker div{
+ height: 40px;
+ width: 40px;
+ background-color: #cccccc;
+ display: inline-block;
+ border-radius: 50%;
+ margin-right:5px;
+}
+
+.answers-tracker div.correct{
+ background-color: green;
+ background-image:url('img/correct.png');
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: 50%;
+
+}
+.answers-tracker div.wrong{
+ background-color: red;
+ background-image:url('img/wrong.png');
+ background-position: center;
+ background-repeat: no-repeat;
+ background-size: 50%;
+}
+
+.quiz-over{
+ position: fixed;
+ left:0;
+ top:0;
+ width: 100%;
+ height: 100%;
+ background-color:rgba(0,0,0,0.9);
+ z-index: 10;
+ display: none;
+ align-items: center;
+ justify-content: center;
+}
+.quiz-over.show{
+ display: flex;
+}
+.quiz-over .box{
+ background-color: #009688;
+ padding:30px;
+ border-radius:10px;
+ text-align: center;
+ flex-basis: 700px;
+ max-width:700px;
+ color:#ffffff;
+}
+
+.quiz-over .box h1{
+ font-size:36px;
+ margin:0 0 20px;
+}
+
+.quiz-over .box button{
+ padding:15px 30px;
+ border:none;
+ background-color:#FF9800;
+ border-radius:5px;
+ font-size:16px;
+ margin:15px 0 20px;
+ color:#ffffff;
+}
+
+</style>
+</head>
+<body>
+     <div class="quizContainer container-fluid well well-lg">
+        <div id="quiz1" class="text-center">
+ <h3 style="color:#d14040;position:center;left:80%;top:0%;" align="Center" ><span id="Modern History Of India Quiz part 01 for all Exams">Quizzes</span><br/><span id='Modern History Of India Quiz part 01 for all Exams' style="font-size:25px;"></span></h3>
+ <h2 Style="color:#ff000;position:center;left:80%;top0%;" align="center" "font-size:25px;"><samp id="Sub heading"> GRAND TEST 1 </samp></h2>
+         
+ </div>
+ <div class="quiz-container">
+    <div class="question-number">
+       <h3>Question <span class="question-num-value"></span> of <span class="total-question"></span></h3>
+    </div>
+    <div class="question">
+   
+    </div>
+    <div class="options">
+       <div id="1" class="option1" onclick="check(this)"></div>
+       <div id="2" class="option2" onclick="check(this)"></div>
+       <div id="3" class="option3" onclick="check(this)"></div>
+       <div id="4" class="option4" onclick="check(this)"></div>
+    </div>
+    <div class="button">
+       <button type="button" class="btn" onclick="next()">Next</button>
+    </div>
+    <div class="answers-tracker">
+     
+    </div>
+ </div>
+
+ <div class="quiz-over" id="dop">
+   <div class="box">
+       
+	
+       <span class="correct-answers"></span> out of <span class="total-question2"></span> answers correct! <br>
+	  
+	  
+	  <form id="form" target="_self" onsubmit="return postToGoogle();" action="" autocomplete="off"> 
+	  
+
+<br>
+<h2>ENTER YOUR TELEGRAM NAME. YOUR MARKS WILL BE SENT TO SARVA BROS</h2><br>
+<h1><center><input id="nameField" name="entry.82725960"  placeholder="Enter your name" type="text" required> </center><h1>
+<br>
+<center><h1><button id="send" type="submit"><h4>Enter</h4></button></h1></center>
+</form>
+     
+   
+     
+   </div>
+ </div>
+
+ <script src="script.js"></script>
+<script>
+
+  const options=document.querySelector(".options").children;
+  const answerTrackerContainer=document.querySelector(".answers-tracker");
+  const questionNumberSpan=document.querySelector(".question-num-value");
+  const totalQuestionSpan=document.querySelector(".total-question");
+  const correctAnswerSpan=document.querySelector(".correct-answers");
+  const totalQuestionSpan2=document.querySelector(".total-question2");
+  const percentage=document.querySelector(".percentage");
+  const question=document.querySelector(".question");
+  const op1=document.querySelector(".option1");
+  const op2=document.querySelector(".option2");
+  const op3=document.querySelector(".option3");
+  const op4=document.querySelector(".option4");
+  let questionIndex;
+  let index=0;
+  let myArray=[];
+  let myArr=[];
+  let score=0;
+
+  // questions and options and answers
+
+   const questions=[
+   {
+    q:'Mumbai boy kush bhagat is coded as  213 30 61 213 <br>Title by world chess is coded as 128 5 128 128 <br>Western Asian youth championship is coded as 346 128 128 1725 <br>“First ever indian to claim the” is coded as 128 61 213 5 128 30 <br>What will be the code for “ tantra Britain asparagus ”?',
+    options:[' 216 343 256',' 213 346 732','243 159 658','None'],
+    answer:2
+   },
+   {
+    q:'If RATION is written as OXQFLK then LUMBER may be written as _____ ',
+    options:['KTLADQ','ITJABQ','OXPEHU','IRJYBO'],
+    answer:4
+   },
+   {
+    q:'In a certain code language CAT is written as 3120 and DOG is written as 4157.What will be the decoded form of 25144?',
+    options:['BEND','BEADD','YADD or YND','cannot Determine'],
+    answer:4
+   },
+   {
+    q:'In a certain code, MOBILE is written as 56. How will the word PHONE be written inthat code? ',
+    options:['58','62','23','45'],
+    answer:1
+   },
+   {
+    q:'In a certain code language the word PHYSICIAN is written as KSBHRXRZM. How will theword MENDELSON be written in that language?',
+    options:['NVMVWOHLM','MVMWVOHLN','NVMWVOHLM','none'],
+    answer:3
+   },
+   {
+    q:'The number obtained by interchanging the two digits of a two-digit number is morethan the original number by 27. If the sum of the two digits is 13, what is the originalnumber? ',
+    options:['63','74','85','58'],
+    answer:4
+   },
+   {
+    q:'. There are two numbers such that the sum of twice the first number and thrice the second number is 300 and the sum of thrice the first number and twice the second number is 265. What is the larger number?',
+   options:['24','39','85','74'],
+    answer:4
+   },
+   {
+    q:'. What is the smallest positive integer that should be added to 7000 to make it a perfect square??',
+    options:['35','225','20','56'],
+    answer:4
+   },
+   {
+    q:'What is the smallest digit which should replace * in the number 296*12 to make it divisible by 12?',
+    options:['1','2','3','4'],
+    answer:1
+   },
+   {
+    q:'The sum of four consecutive even numbers is 44. What is the sum of the original squares of these numbers?',
+    options:['228','502','696','None'],
+    answer:4
+   },
+   {
+    q:' In a class of 36 students Ravi’s rank from the top is 12. Radhika ranks three places above Ravi. What is Radhika’s rank from the bottom??',
+    options:['27','28','26','None'],
+    answer:2
+   },
+   {
+    q:'Among five boys, Vineet is taller than Manick, but not as tall as Ravi. Jacob is taller than Dilip but shorter than Manick. Who is the tallest in their group?',
+    options:['Ravi','Manick','Vineeth','None'],
+    answer:1
+   },
+   {
+    q:'In a row of boys, Deepak is 7th from the left and Madhu is 12th from the right. If they interchange their positions, Deepak becomes 22nd from the left. What is the total number of boys in the row?',
+    options:['19','31','33','cannot'],
+    answer:3
+   },
+   {
+    q:'Among P, Q, R, S and T, each having a different weight, R is heavier than S but lighter than T. P is lighter than S. Who among them is the heaviest?',
+    options:['T','Q','T or Q','Data Inadequate'],
+    answer:3
+   },
+   {
+    q:'In a class of boys Piyush ranked twelth from the top and thirty sixth from the bottom among those who passed an examination. Four boys did not participate in the competition and nine failed in it. How many boys were there in the class?',
+    options:['40','44','50','60'],
+    answer:4
+   },
+   {
+   q:'A trader has three types of oils of the following quantities: 406 liters, 434 liters and 455 liters respectively. If he wants to fill them separately in tins of equal capacity, what is the least number of tins required?',
+    options:['42','21','7','None'],
+    answer:4
+   },
+   {
+   q:'A, B and C start at the same time in the same direction to run around a circular stadium. A completes a round in 3 min, B in 4 min and C in 5 min, all starting at the same point. After how many minutes will they again meet at the starting point?',
+    options:['12','24','60','46'],
+    answer:3
+   },
+   {
+   q:'The LCM and HCF of two positive numbers are 300 and 30 respectively. If one of the numbers is divided by 4, the quotient is 15, and then what is the other number?',
+    options:['360','300','150','75'],
+    answer:3
+   },
+   {
+   q:'1. The H.C.F and L.C.M of two numbers are 44 and 264 respectively. If the first number is divided by 2, the quotient is 44. What is the other number? ?',
+    options:['123','283','308','318'],
+    answer:3
+   },
+   {
+   q:'. There are three bells which ring at regular intervals of 30 seconds, 45 seconds and 60 seconds respectively. If all of them ring together at 1:00 PM, at what time will they again ring together?',
+    options:['1:12','1:24','1:30','1:03'],
+    answer:4
+   }
+   
+   
+   
+   
+   
+ 
+  ]
+  // set questions and options and question number
+  totalQuestionSpan.innerHTML=questions.length;
+  function load(){
+        questionNumberSpan.innerHTML=index+1;
+         question.innerHTML=questions[questionIndex].q;   
+         op1.innerHTML=questions[questionIndex].options[0];
+         op2.innerHTML=questions[questionIndex].options[1];
+         op3.innerHTML=questions[questionIndex].options[2];
+         op4.innerHTML=questions[questionIndex].options[3];
+         index++;
+  }
+
+  function check(element){
+   if(element.id==questions[questionIndex].answer){
+    element.classList.add("correct");
+    updateAnswerTracker("correct")
+    score++;
+    console.log("score:"+score)
+   }
+   else{
+    element.classList.add("wrong");
+    updateAnswerTracker("wrong")
+
+   }
+   disabledOptions()
+  }
+ 
+  function disabledOptions(){
+     for(let i=0; i<options.length; i++) {
+      options[i].classList.add("disabled");
+      if(options[i].id==questions[questionIndex].answer){
+       options[i].classList.add("correct");
+      }
+
+     }
+  }
+
+  function enableOptions(){
+     for(let i=0; i<options.length; i++) {
+      options[i].classList.remove("disabled","correct","wrong");
+     }
+  }
+
+  function validate(){
+      if(!options[0].classList.contains("disabled")){
+        alert("Please Selecto one option")
+      }
+      else{
+       enableOptions();
+       randomQuestion();
+      }
+  }
+
+  function next(){
+    validate();
+  }
+ 
+  function randomQuestion(){
+   let randomNumber=Math.floor(Math.random()*questions.length);
+   let hitDuplicate=0;
+       if(index==questions.length){
+        quizOver();
+       }
+       else{
+         if(myArray.length>0){
+             for(let i=0; i<myArray.length; i++){
+               if(myArray[i]==randomNumber){
+                  hitDuplicate=1;
+                  break;
+               }
+             }
+             if(hitDuplicate==1){
+              randomQuestion();
+             }
+             else{
+               questionIndex=randomNumber; 
+              load();
+              myArr.push(questionIndex);
+             }
+         }
+         if(myArray.length==0){
+           questionIndex=randomNumber; 
+           load();
+           myArr.push(questionIndex);
+         }
+
+       myArray.push(randomNumber);
+     
+      }
+  }
+   
+  function answerTrakcer(){
+     for(let i=0; i<questions.length; i++){
+      const div=document.createElement("div")
+         answerTrackerContainer.appendChild(div);
+     }
+  }
+
+ function updateAnswerTracker(classNam){
+   answerTrackerContainer.children[index-1].classList.add(classNam);
+ }
+
+
+function postToGoogle() {
+                var field1 = $("#nameField").val();
+				var x=(score/questions.length)*100 ;
+				var field2=field1+x.toString();
+            
+               
+        if(field1 == ""){
+          alert('Please Fill Your Name');
+          document.getElementById("nameField").focus();
+          return false;
+
+        }
+      
+        
+                
+        
+  
+                $.ajax({
+                    url: "https://docs.google.com/forms/d/e/1FAIpQLSeQ-hg_GEX3c1xpmciKUZFu290ItkkyXDEbc2QntvhpdfUEug/formResponse?",
+          data: {"entry.82725960": field2},
+                    type: "POST",
+                    dataType: "xml",
+                    success: function(d)
+          {
+          },
+          error: function(x, y, z)
+            {
+
+              $('form').hide();
+			  $('#success').show();
+			  
+			  
+              
+            }
+                });
+        return false;
+		document.getElementById("quiz-over").innerHTML="<h2>Your Marks are Sent To SARVA BROS</h2>";
+		
+            }
+ function quizOver(){
+    document.querySelector(".quiz-over").classList.add("show");
+    correctAnswerSpan.innerHTML=score;
+    totalQuestionSpan2.innerHTML=questions.length;
+	
+    percentage.innerHTML=(score/questions.length)*100 + "%";
+	
+	
+	
+	
+ }
+
+ function tryAgain(){
+     window.location.reload();
+ }
+
+ window.onload=function(){
+  randomQuestion();
+  answerTrakcer();
+
+}
+
+</script>
+
+</body>
+</html>

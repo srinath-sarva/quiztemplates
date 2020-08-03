@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Quiz</title>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>  
+    </head>
+    <style>
+        
+       
+        fieldset {
+            border-style: ridge;
+            border-color: red;
+            width: 500px;
+            height: 600px;
+            background-color: pink;
+            border-width: 30px;
+            padding: 40px;
+        }
+        #start{
+            background-color: blue;
+            color:white;
+            font-size: large;
+            font-weight:bolder ;
+            
+        }
+        button:hover{
+            background-color: red;
+        }
+        
+        #full{
+          
+            color:black;
+            font-size: large;
+            font-weight:bolder ;
+        }
+        
+    </style>
+        <body style="background-color:powderblue;background-image:url('https://data.whicdn.com/images/316755090/original.gif')">
+    
+        <center> 
+        <fieldset>
+       <div  id="full">
+           <center><h4 style="background-color: blue; text-align: center;color: white;">SARVA PRIZE QUIZ</h4></center>
+        <h3 id="st1">WRITE THE TEST TO WIN EXCITING OFFER</h3>
+
+
+            <button id="start" onclick="run(0)">START</button>
+            <mark><h1 id="score">SCORE:0</h1></mark>
+            <div >
+                <div >
+                    
+                    <h3 id="question"></h3><br><br>
+                <div id="opt" style="display:none">
+                    <button type="radio" class="btn"id="b1" name="browser" onclick="myFunction(this.value)" value=1></button><br><br>
+                    <button type="radio" class="btn"id="b2" name="browser" onclick="myFunction(this.value)" value=2></button><br><br>
+                    <button type="radio" class="btn"id="b3" name="browser" onclick="myFunction(this.value)" value=3></button><br><br>
+                    <button type="radio" class="btn"id="b4" name="browser" onclick="myFunction(this.value)" value=4></button><br><br>
+                </div>               
+                
+               
+                </div>
+
+                    
+            
+                       
+
+            </div>
+                
+                    
+        </div>
+            
+    
+        <form id="details"method="get" style="display:none"action="" class="">
+           ENTER YOUR MAIL ADDRESS   TO GET PRIZE<input class="form-control" type="text" id="gmail" required>
+           <button class="btn btn-primary" type="button" onclick="sgmail()">CLICK HERE TO SUBMIT TEST</button>
+        </form>
+        <h1 id="message"></h1>
+        
+
+    
+</fieldset>
+</center>
+    </body>
+
+    <script>
+             var i=0;
+        var score=0;
+
+        arr= new Array(10);
+    
+    arr[0]=new Question("what capital of india",
+    ["Delhi","mumbai","chennai","None"]
+    ,1);
+    arr[1]=new Question("what capital of china",
+    ["beijing","hongcong","wuhan","sanghai"]
+    ,1);
+    arr[2]=new Question("what capital of malaysia",
+    ["Singapur","Kaulalampur","malacca","None"]
+    ,2);
+    arr[3]=new Question("what is pink city",
+    ["jaipur","mumbai","jodhpur","None"]
+    ,1);
+    arr[4]=new Question("what is blue city",
+    ["Jodhpur","Jaipur","Udaipur","None"]
+    ,1);
+    arr[5]=new Question("City of lakes",
+    ["Jaipur","Udaypur","Jodhpur","None"]
+    ,2);
+    arr[6]=new Question("Manchester City of India",
+    ["Delhi","mumbai","Ahmedabad","None"]
+    ,3);
+    arr[7]=new Question("Deccan Queen Of India",
+    ["Pune","Mubmai","Goa","None"]
+    ,1);
+    arr[8]=new Question("Wine Capital Of india",
+    ["Kasi","Mahabalipuraqm","Nashik","None"]
+    ,1);
+    arr[9]=new Question("SandalWoodCity of India",
+    ["Bangolore","Mysore","Mangalore","Udipi"]
+    ,2);
+    
+
+
+        function myFunction(n)
+        {
+                   if(arr[i].answer==n)
+                   {
+                           score=score+10;
+                          
+                           
+                   }
+                   if(i==9)
+                   {
+                       document.getElementById("full").innerHTML="your Total Score"+"="+score;
+
+                       document.getElementById("details").style.display="block";
+
+                   }
+                
+                    document.getElementById("score").innerHTML="SCORE:"+score;
+                    i=i+1;
+                    run(i);
+        }
+        function run(i)
+        {       g=i+1
+                document.getElementById("start").style.display="none";
+                document.getElementById("st1").style.display="none";
+
+                document.getElementById("opt").style.display="block";
+                document.getElementById("question").innerHTML=g+") "+arr[i].question;
+                document.getElementById("b1").innerHTML=arr[i].options[0];
+                document.getElementById("b2").innerHTML=arr[i].options[1];
+                document.getElementById("b3").innerHTML=arr[i].options[2];
+                document.getElementById("b4").innerHTML=arr[i].options[3];
+
+
+
+        }
+        
+    function sgmail()
+    {
+        var gmail=  document.getElementById("gmail").value;
+        sendgmail(gmail);
+
+    }
+        
+        function sendgmail(gmail) {
+            var mess="<html><body style='background-color:powderblue'> <center><h3>CONGRATS FROM THE SARVA TEAM</h3><br></center> <center> <img src='https://i.pinimg.com/originals/23/92/fb/2392fb7e5f3b36bfbeca4ff575a7eca0.png' width='100px' height='100px'></center> <h3>BY THE WAY HI,I AM SARVANIKA THE ASSISANT OF SARVA BROS</h3> <h2>YOU HAVE WIN THESE BOOKS AS PRIZES</h2> <br> <a href='https://drive.google.com/drive/folders/1qMFjx6_6lu6REWbL-9R5ZhH0R9FW1Ak4?usp=sharing'><button style='background-color: green; color:white;'>BOOK 1</button></a> <br> <a href='https://drive.google.com/drive/mobile/folders/1t0QSMolXf_HGsZ-ZIYY0NlOh7JOv1zpG?usp=sharing'><button style='background-color: green; color:white;'>BOOK 2</button></a> <br> <a href='https://drive.google.com/file/d/1fcUmx0RwVxJpwIYIpVgE9YQcLurizEIU/view?usp=sharing'><br><button style='background-color: green; color:white;'>BOOK 3</button></a> <br><br></body> </html>"
+            
+            document.getElementById("details").style.display="none";
+            document.getElementById("message").innerHTML="PRIZE HAS BEEN SENT TO YOU PLEASE REFRESH MAIL";
+
+            
+	Email.send({
+	Host: "smtp.gmail.com",
+	Username : "sarvanika.assistant@gmail.com",
+	Password : "sarvanika.123",
+	To : gmail,
+	From : "sarvanika.assistant@gmail.com",
+	Subject : "CONGRATS YOU HAVE WON THE PRIZE"+" "+score+" marks",
+	Body : mess,
+	}).then(
+		message => alert("mail sent successfully")
+	);
+}
+        function Question(question,options,answer)
+        {
+            this.question=question;
+            this.options=options;
+            this.answer=answer;
+
+        }
+   
+        
+    </script>
+</html>
+

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- <script>
+  var audio = new Audio( 
+'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3'); 
+        audio.play(); 
+      </script> -->
+      <script src="https://smtpjs.com/v3/smtp.js">
+      </script>
+
+
+<script>
+  function lesstime() { 
+            var audio = new Audio( 
+'https://freesound.org/data/previews/404/404483_6925139-lq.mp3'); 
+
+            audio.play(); 
+        }
+</script>
+
+<script>
+questions={1: ['How many players are there in an ice hockey team', '9', '12', '6', '14', '3'], 2: ['LPG(Liquefied Petroleum Gas) is mainly a mixture of which gases', 'Butane', 'Phosphine', 'Propane and Butane', 'Propane', '3'], 3: ['Which instrument is used for measuring wind speed', 'Anemometer', 'Manometer', 'Spectrometer', 'None', '1'], 4: ['How many straight edges does a cube have', '10', '11', '13', '12', '4'], 5: ['Which layer of planet Earth is made up of tectonic plates', 'Inner Core', 'Outer Core', 'Mantle', 'Crust', '4'], 6: ['Convection', ' Frontal and Relief are the three main types of', 'clouds', 'rainfall', 'winds', 'none', '2'], 7: ['Which kind of ‘bulbs’ were once exchanged as a form of currency', 'Tulips', 'Dram', 'Dinar', 'Yen', '1'], 8: ['What does the term ‘Piano’ mean', 'loud', 'forte', 'soft', 'none', '3'], 9: ['Adults have a total of ___ teeth', '32', '34', '36', '30', '2'], 10: ['There are ___ days in May', '30', '31', '29', 'none', '1'], 11: ['Cinderella’s carriage turns into a ____', 'pumpkin', 'potato', 'brinjal', 'onion', '2'], 12: ['A jellyfish is ___ water', '80%', '60%', '90%', '95%', '4'], 13: ['Electrons are larger than molecules', 'True', 'False', 'Cannot be determined', 'none', '2'], 14: ['Pick Odd One Out', 'Knife', 'Poison', 'Gun', 'Books', '4'], 15: ['What is the hottest continent on Earth', 'Asia', 'Europe', 'Africa', 'South America', '3'], 16: ['Who is the specialist of eyes', 'Cardiologist', 'Neurologist', 'Ophthalmologist', 'None of these', '3'], 17: ['What is capital of austria', 'Canberra', 'Vienna', 'Baku', 'Gaborone', '2'], 18: ['How many months has 28 days', 'February', 'january', 'march', 'All the months', '4'], 19: ['If three kids can eat three hot dogs in three minutes', ' how many minutes would it take 100 kids to eat 100 hot dogs?', '100 minutes', '33.3 minutes', '3 minutes', 'Cannot be determined', '3'], 20: ['What is Laughing gas', 'NO2', 'N2O', 'CO2', 'H2S', '1'], 21: ['How Many Total Number of comformed cases of corona disease are there in the world', '3 millions', '16 millions', ' 35 millions', '1 million', '2'], 22: ['What is official name of the virus designated by WHO(WORLD HEALTH ORGANIZATION)', 'Sars-Cov-2', 'Covid-19', 'Corona', 'Wuhan Flu', '1'], 23: ['How long can the virus survive on plastic and stainless steel surfaces', ' according to studies', '24 hours', '5hours', '70 hours', 'None of these', '3'], 24: ['When did famous actor sushant singh die', '19 june 2020', '25 june 2020', '14 june 2020', '7 june 2020', '3'], 25: ['How many parts of Harry Potter were released', '3', '6', '8', '9', '3'], 26: ['Who invented the BALLPOINT PEN', 'Biro Brothers', 'Waterman Brothers', 'Bicc Brothers', 'Write Brothers', '1'], 27: ['Which scientist discovered the radioactive element radium', 'Isaac Newton', 'Albert Einstein', 'Benjamin Franklin', 'Marie Curie', '4'], 28: ['What James Watt invented', 'Diving bell', 'Steam boat', 'Hot air balloon', 'Rotary steam engine', '4'], 29: ['Who invented Gramophone', 'Michael Faraday', 'Fahrenheit', 'Sir Alexander Graham Bell', 'Thomas Alva Edison', '4'], 30: ['Which is the largest organ of the human body', 'lungs', 'skin', 'river', 'none', '2'], 31: ['Which is the largest island on Earth', 'Green land', 'Borneo', 'Madagascar', 'None', '1'], 32: ['Which is the largest lake in the world', 'Capsican sea', 'dead sea', 'Lake superior', 'lake Baikal', '1'], 33: ['Which is the largest library in the world', 'The US library of congress', 'The Russian state library', 'The British Library', 'None of These', '1'], 34: ['Who won 2019 world cup', 'India', 'Pakistan', 'Australia', 'England', '4'], 35: ['Which of the following is a perfect cube', '343', '9', '1331', 'Both a and c', '4'], 36: ['What is the name of the 2nd biggest planet in our solar system', 'Saturn', 'Mercury', 'Venus', 'Earth', '1'], 37: ['What is the hottest planet in universe', 'Mercury', 'Venus', 'Saturn', 'Neptune', '2']}
+var x=0;
+var z=0
+function quiz()
+{
+  x+=1;
+  if(x==1)
+  {
+     
+
+    var timeleft = 320;
+    var downloadTimer = setInterval(function(){
+    if(timeleft <= 0 || z==1){
+    clearInterval(downloadTimer);
+     document.getElementById("countdown").innerHTML = "Finished";
+     $("#options").slideUp(1000);
+     $("#bb").fadeOut(1000,function(){con()});
+     
+     }
+     
+    else if(timeleft<10){
+      $("#countdown").css("color","red");
+      lesstime();
+      document.getElementById("countdown").innerHTML =  "Time Left "+ timeleft  ;
+    }
+  else {
+    
+  document.getElementById("countdown").innerHTML = "Time Left "+ timeleft ;
+      }
+timeleft -= 1;
+}, 1000);
+  }
+  var d;
+  document.getElementById("head").innerHTML="Question"+" "+x;
+  document.getElementById("ques").innerHTML=questions[x][0]+" ?";
+  $("#bb").show();
+  document.getElementById("opt1").innerHTML="A) "+questions[x][1];
+  document.getElementById("opt2").innerHTML="B) "+questions[x][2];
+  document.getElementById("opt3").innerHTML="C) "+questions[x][3];
+  document.getElementById("opt4").innerHTML="D) "+questions[x][4];
+  $("#options").slideDown(1000);
+  
+  
+}
+
+
+
+
+function play(time) { 
+            var audio = new Audio( 
+'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3'); 
+            audio.play(); 
+
+            setTimeout(function() { alert("one or more feilds are empty"); },time);
+        } 
+        function press() { 
+            var audio = new Audio( 
+'https://www.soundjay.com/button/sounds/button-09.mp3'); 
+            audio.play(); 
+        
+           
+            
+        } 
+        function coin() { 
+            var audio = new Audio( 
+'https://freesound.org/data/previews/341/341695_5858296-lq.mp3'); 
+            audio.play(); 
+        }
+
+
+        function wrong() { 
+            var audio = new Audio( 
+'https://freesound.org/data/previews/331/331912_3248244-lq.mp3'); 
+            audio.play(); 
+        }
+        
+        function congra() { 
+            var audio = new Audio( 
+'https://freesound.org/data/previews/340/340355_5205523-lq.mp3'); 
+            audio.play(); 
+        }
+
+
+
+ 
+  function send()
+  {
+    
+    Email.send({
+    Host : "smtp.gmail.com",
+    Username : "sarvanika.assistant@gmail.com",
+    Password : "sarvanika.123",
+    To : "d4dictionari@gmail.com",
+    From : "sarvanika.assistant@gmail.com",
+    Subject : "SVS QUIZ REPORT",
+    Body : username +"   "+ c + "  " + useremail,
+});
+
+   
+  } 
+  function send2()
+  {
+    
+    Email.send({
+    Host : "smtp.gmail.com",
+    Username : "sarvanika.assistant@gmail.com",
+    Password : "sarvanika.123",
+    To : useremail,
+    From : "sarvanika.assistant@gmail.com",
+    Subject : "CONGRATS FROM SVS ",
+    Body : "You have scored" +" "+c+" in our quiz contest. We will be coming with more quizes",
+});
+
+   
+  } 
+
+  function con()
+  {
+    congra();
+    send();
+    send2();
+    
+    $("#cong").fadeIn(1000)
+    if(z==0){
+      $("#score").append(c);
+    }
+    z=1
+    
+    $("#pithu").slideDown(1000)
+  }
+
+
+
+
+  function funt()
+  {   
+      if(x==0)
+      {
+        press();
+      }
+      quiz();
+      
+      
+
+  }
+  var c=0;
+  function gen(n)
+  {
+      if(questions[x][5]==n)
+      {
+        c+=10;
+        coin()
+      }
+      else
+      {
+        c-=2;
+        wrong()
+      }
+      fun()
+  }
+  var username;
+  var useremail;
+  
+  function fun()
+  {
+    if(x==0){
+      username= $("#peru").val();
+       useremail=$("#email").val();
+      if(username==""  || useremail=="")
+      {   
+        play(500);
+        return ;
+      }
+      $("#ff").fadeOut(1000,function(){funt()});
+     
+
+    }
+    else if(x>=Object.keys(questions).length)
+    {
+      
+      $("#options").slideUp(1000);
+     $("#bb").fadeOut(1000,function(){con()});
+
+
+    }
+
+    else
+    {
+    $("#options").slideUp(1000);
+   
+    $("#bb").fadeOut(1000,function(){funt()});
+    }
+  }
+  function pik()
+  {
+    $("#gk").hide();
+    print();
+  }
+
+  function showcert(){
+    
+    $("#cong").fadeOut();
+    $("#certificate").show();
+    document.getElementById("nam").innerHTML=username;
+    document.getElementById("scor").innerHTML=c;
+    $("#countdown").hide();
+
+  }
+</script>
+    <style>
+    /* For mobile phones: */
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+*{
+    max-width: 100%;
+  height: auto;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+   
+        #ff,#bb
+        {
+            border:10px solid red;
+           
+            background-color:cyan;
+            padding:20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            background-image: url('https://t4.ftcdn.net/jpg/03/45/88/07/240_F_345880772_zIT2mkdCzTthplO7xqaGGrMspN0jw0ll.jpg') ;
+            position: absolute;
+
+        }
+
+        #cong
+        {
+            border:10px solid green;
+           
+            /* background-color:cyan; */
+            padding:20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
+            background-image: url('https://media2.giphy.com/media/9u2VQAwIgpMZKT6qTV/source.gif') ;
+            position: absolute;
+
+        }
+
+        input{
+            
+            color: blue;
+        }
+        #kk {
+        border: none;
+        background: url('https://www.clker.com/cliparts/z/l/m/N/h/I/glossy-rounded-rectangular-button-without-text-hi.png');
+        background-size:auto 100%;
+        width:97px;
+        height: 40px;
+        padding: 2px 8px;
+        color:black;
+       }
+       #bk
+       {
+        border: none;
+        background-color:green;
+        background-size:auto 100%;
+        width:97px;
+        height: 40px;
+        padding: 2px 8px;
+        color:black;
+        border:4px black;
+
+       }
+       #gk
+       {
+        order: none;
+        background-color:green;
+        background-size:auto 100%;
+        width:97px;
+        height: 40px;
+        padding: 2px 8px;
+        color:black;
+        border:4px black;
+      
+
+       }
+       #bb
+       {
+           display: none;
+       }
+       #opt1,#opt2,#opt3,#opt4{
+        border: 2px solid cyan;
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRW_gCfD8gSUpOC58v1RYtC3avtndnl8dmycA&usqp=CAU');
+        background-size:auto 100%;
+        width:fit-content;
+        height: 40px;
+        padding: 2px 8px;
+        color:white;
+        border-radius: 15px
+       }
+       #options,#cong,#pithu{
+         display: none;
+         width:fit-content;
+
+       }
+       #cert
+        {
+            background-image: url('https://media2.giphy.com/media/9u2VQAwIgpMZKT6qTV/source.gif');
+        }
+    </style>
+</head >
+    <body>
+      <h2 id="countdown" style="background-image: url('https://i.pinimg.com/600x315/df/d6/94/dfd694251934c69f778becb2e569bb07.jpg'); width: fit-content;color:green; border:10px solid black">Enter Details</h2>
+      
+      
+    <center>
+      
+    <fieldset  class="col-ml-8 col  "  id="ff">
+      <img src="https://static.wixstatic.com/media/8ed78d_bdf75903264c45c5b8387370d0603f6c~mv2.png/v1/fill/w_560,h_222,al_c,q_85,usm_0.66_1.00_0.01/SVS%20Logo%20only%20with%20shadow%20copy.webp"  width="200" height="80" > 
+      
+     <h1 style="width:fit-content;background-image: url('https://i.pinimg.com/600x315/df/d6/94/dfd694251934c69f778becb2e569bb07.jpg');color:black;padding-top: 3px;border-radius: 5px;">Quiz Contest</h1>
+     <h3 style="width:fit-content;background-color:yellow;color:black;padding-top: 3px;border-radius: 5px;">Enter Name</h3>
+     <input id="peru" type="text" size=30px>
+     <h3 style="width:fit-content;background-color:yellow;color:black;padding-top: 3px;border-radius: 5px;">Enter Gmail Address</h3>
+     <input  id="email" type="text" size=30px>
+
+     <br><br>
+     <button id="kk" type="button"  onclick="fun()"><h4>Start Quiz</h4></button>
+    </fieldset>
+    </center>
+
+
+
+
+    <center>
+      <fieldset  class="col-ml-8 col  "  id="bb">  
+        <img src="https://static.wixstatic.com/media/8ed78d_bdf75903264c45c5b8387370d0603f6c~mv2.png/v1/fill/w_560,h_222,al_c,q_85,usm_0.66_1.00_0.01/SVS%20Logo%20only%20with%20shadow%20copy.webp"  width="150" height="60" >                                                         
+       <h1 id="head" style="width:fit-content;background-image: url('https://i.pinimg.com/600x315/df/d6/94/dfd694251934c69f778becb2e569bb07.jpg');color:black;padding-top: 3px;border-radius: 5px;"></h1>
+       <h2 id="ques"style="width:fit-content; background-image: url('https://thumbs.dreamstime.com/b/background-brown-wooden-horizontal-new-boards-light-texture-design-natural-wood-164153688.jpg');color:yellow;border: 2px solid pink;padding-top: 3px;padding-left:5px;padding-right:5px;border-radius: 5px;"></h2>
+       <br>
+       <div id="options">
+       <button id="opt1" onclick="gen(1)"></button><br><br>
+       <button id="opt2" onclick="gen(2)"></button><br><br>
+       <button id="opt3" onclick="gen(3)"></button><br><br>
+       <button id="opt4" onclick="gen(4)"></button><br>
+    </div>
+       
+      </fieldset>
+      </center>
+
+      <center>
+        <fieldset  class="col-ml-8 col  "  id="cong">                                                          
+         <h1 style="width:fit-content;background-image: url('https://i.gifer.com/AzIa.gif');color:yellow;padding-top: 3px;border-radius: 5px;"> <i> Congratulations</i></h1>
+         
+         <br>
+         <div id="pithu">
+           <h2 id="score" >You got the score </h2>
+           <button id="bk" type="button" style="width:fit-content" onclick="showcert()"><h4>Generate Certificate</h4></button>
+           <h3 style="color:yellow;border:3px blue ;background-image: url('https://i.gifer.com/AzIa.gif');">Designed,Programmed and Conducted by :</h3>
+           <img src="https://static.wixstatic.com/media/8ed78d_bdf75903264c45c5b8387370d0603f6c~mv2.png/v1/fill/w_560,h_222,al_c,q_85,usm_0.66_1.00_0.01/SVS%20Logo%20only%20with%20shadow%20copy.webp"  width="200" height="80" > 
+         </div>
+
+         <h1><img src="https://d4dictionary.000webhostapp.com/images/all.png" ></h1>
+
+
+         
+         <br><br>
+         
+        </fieldset>
+        </center>
+
+
+
+        <center>
+
+          <div   class='drag'id="certificate" style='background-color: white;display: none;width:fit-content '>
+              
+              <div id='cert' style='width:fit-content; height:fit-content; padding:20px; text-align:center; border: 10px solid powderblue'>
+                  <div style='width:fit-content; height:fit-content; padding:20px; text-align:center; border: 5px solid red'>
+                      <img src='https://static.wixstatic.com/media/8ed78d_bdf75903264c45c5b8387370d0603f6c~mv2.png/v1/fill/w_560,h_222,al_c,q_85,usm_0.66_1.00_0.01/SVS%20Logo%20only%20with%20shadow%20copy.webp' width='150' height='60' >
+                         <span style='font-size:50px; font-weight:bold; color:red'>SVS QUIZ REPORT</span>
+                         <br><br>
+                         <span style='font-size:25px '><i>This is to certify that</i></span>
+                         <br><br>
+                         <span style='font-size:30px'><b id='nam'></b></span><br/><br/>
+                         <span style='font-size:25px'><i>has completed the IQ test</i></span> <br/><br/>
+                         <span style='font-size:30px'>conducted by<b> SVS SOFTWARE SOLUTIONS</b></span> <br/><br/>
+                         <span style='font-size:30px'>with score  <b id="scor"></b></span> <br/><br/><br/><br/>
+                         <span style='font-size:25px'><i>dated on <b>26th july 2020 </b> </i></span><br>
+                        
+                         <button id="gk" type="button" style="width:fit-content" onclick="pik()"><h4>Download Certificate as pdf</h4></button>
+                  </div>
+                  </div>
+              </div>
+              
+          </center>
+
+</body>
+</html>
